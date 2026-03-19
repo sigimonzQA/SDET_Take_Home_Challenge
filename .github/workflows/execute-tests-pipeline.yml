@@ -3,9 +3,13 @@ on:
   workflow_dispatch:
 run-name: Execute test cases 
 jobs:
-  DEV:
+  EXECUTE TESTS:
     timeout-minutes: 20
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false 
+      matrix:
+        environment: [dev, prod]
     services:
       app:
         image: ghcr.io/danielsilva-loanpro/sdet-interview-challenge:latest
@@ -15,46 +19,19 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
         with:
-          node-version: 24
+          node-version: 'lts/*'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
       
       - name: Execute Schedule Test Suite
-        run: npm run dev
+        run: npm run ${{ matrix.environment }}
 
       - name: Upload html report
         uses: actions/upload-artifact@v5
         if: always()
         with:
-          name: DEV-Execution-Report
-          path: playwright-report/
-          retention-days: 1
-  PROD:
-    timeout-minutes: 20
-    runs-on: ubuntu-latest
-    services:
-      app:
-        image: ghcr.io/danielsilva-loanpro/sdet-interview-challenge:latest
-        ports:
-          - 3000:3000
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version: 24
-
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Execute Schedule Test Suite
-        id: ManualTestExecution
-        run: npm run prod
-
-      - name: Upload html report
-        uses: actions/upload-artifact@v5
-        if: always()
-        with:
-          name: PROD-Execution-Report
+          name: ${{ matrix.environment }}-Execution-Report
           path: playwright-report/
           retention-days: 1
