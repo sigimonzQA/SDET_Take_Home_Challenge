@@ -1,5 +1,3 @@
-﻿# playwrightTypeScriptFramework
-
 # BUGS REPORT
 
 ## [PUT] /users/{email} - update user
