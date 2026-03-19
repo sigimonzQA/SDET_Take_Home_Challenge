@@ -6,7 +6,10 @@ export default class WebsiteEndpoint extends endpoint {
     "Content-Type": "application/json",
   };
   public async getUsers() {
-    const response = await this.getRequest(`${ENV.BASE_API_URL}/users`, this.headers);
+    const response = await this.getRequest(
+      `${ENV.BASE_API_URL}/users`,
+      this.headers,
+    );
     return response;
   }
   public async createUser(user: any) {
@@ -22,20 +25,23 @@ export default class WebsiteEndpoint extends endpoint {
       `${ENV.BASE_API_URL}/users/${email}`,
       this.headers,
     );
-    return response
+    return response;
   }
-  public async updateUsersEmail(email: string) {
+  public async updateUsersEmail(email: string, userData: any) {
     const response = await this.putRequest(
       `${ENV.BASE_API_URL}/users/${email}`,
-      "",
+      userData,
       this.headers,
     );
+    return response;
   }
   public async deleteUserByEmail(email: string) {
+    console.log("current headers: "+ this.headers.Authorization)
     const response = await this.deleteRequest(
       `${ENV.BASE_API_URL}/users/${email}`,
       "",
       this.headers,
     );
+    return response;
   }
 }
