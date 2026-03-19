@@ -11,21 +11,6 @@ export default defineConfig({
   workers: 1,
   reporter: [
         ["html", { open: 'never' }],
-        ["blob"],
-        ["line"],
-        [
-          "allure-playwright",
-          {
-            detail: false,
-            suiteTitle: false,
-            environmentInfo: {
-              Environment: process.env.test_env,
-              OS_Platform: os.platform(),
-              OS_Version: os.version(),
-              Node_Version: process.version,
-            },
-          },
-        ],
       ],
   use: {
     trace: "on-first-retry",
