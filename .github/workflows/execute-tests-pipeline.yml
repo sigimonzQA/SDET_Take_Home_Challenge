@@ -3,22 +3,15 @@ on:
   workflow_dispatch:
 run-name: Execute test cases 
 jobs:
-  docker-setup:
-    timeout-minutes: 20
-    runs-on: ubuntu-latest
-    steps:
-      - name: set up docker image
-        run: docker run -p 3000:3000 ghcr.io/danielsilva-loanpro/sdet-interview-challenge:latest
-
-      - name: verify it is running
-        run: |
-          docker run -d --name sdet-interview-challenge:latest
-          sleep 25
-          docker ps
   DEV:
     timeout-minutes: 20
     runs-on: ubuntu-latest
     needs: docker-setup
+    services:
+      app:
+        image: ghcr.io/danielsilva-loanpro/sdet-interview-challenge:latest
+        ports:
+          - 3000:3000
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -45,6 +38,11 @@ jobs:
     needs: docker-setup
     timeout-minutes: 20
     runs-on: ubuntu-latest
+    services:
+      app:
+        image: ghcr.io/danielsilva-loanpro/sdet-interview-challenge:latest
+        ports:
+          - 3000:3000
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
