@@ -28,7 +28,7 @@ jobs:
         if: always()
         with:
           name: QA-Execution-Report
-          path: reports/
+          path: playwright-report/
           retention-days: 1
   PROD:
     timeout-minutes: 20
@@ -56,5 +56,5 @@ jobs:
         if: always()
         with:
           name: PROD-Execution-Report
-          path: reports/
+          path: playwright-report/
           retention-days: 1
