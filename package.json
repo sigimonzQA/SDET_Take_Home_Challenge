@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "qa": "cross-env testEnv=qa npx playwright test getUsersByEmail.spec.ts",
+    "qa": "cross-env testEnv=qa npx playwright test",
     "prod": "cross-env testEnv=prod npx playwright test"
   },
   "keywords": [],
