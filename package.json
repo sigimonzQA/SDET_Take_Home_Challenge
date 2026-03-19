@@ -1,0 +1,29 @@
+{
+  "name": "playwrighttypescriptframework",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "qa": "cross-env testEnv=qa npx playwright test getUsersByEmail.spec.ts",
+    "prod": "cross-env testEnv=prod npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.5.0",
+    "cross-env": "^10.1.0",
+    "eslint": "^10.0.3",
+    "eslint-plugin-playwright": "^2.10.1",
+    "typescript-eslint": "^8.57.1"
+  },
+  "dependencies": {
+    "allure-playwright": "^3.6.0",
+    "build": "^0.1.4",
+    "dotenv": "^17.3.1",
+    "filestream": "^5.0.0",
+    "lint": "^0.8.19"
+  }
+}
