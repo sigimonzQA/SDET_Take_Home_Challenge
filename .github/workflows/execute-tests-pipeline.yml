@@ -32,7 +32,6 @@ jobs:
         run: npx playwright install --with-deps
       
       - name: Execute Schedule Test Suite
-        id: ManualTestExecution
         run: npm run qa
 
       - name: Upload html report
