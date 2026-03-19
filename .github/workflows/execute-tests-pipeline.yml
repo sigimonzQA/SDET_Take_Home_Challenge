@@ -15,7 +15,7 @@ jobs:
           docker run -d --name sdet-interview-challenge:latest
           sleep 25
           docker ps
-  QA:
+  DEV:
     timeout-minutes: 20
     runs-on: windows-latest
     needs: docker-setup
@@ -32,7 +32,7 @@ jobs:
         run: npx playwright install --with-deps
       
       - name: Execute Schedule Test Suite
-        run: npm run qa
+        run: npm run dev
 
       - name: Upload html report
         uses: actions/upload-artifact@v4
