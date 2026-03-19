@@ -123,6 +123,26 @@ test("[put]  /users/{email} - update user - code 400 scenario (invalid age)", as
     expect.soft(updateUserData.error).toBe("User not found")
   });
 });
+test("[put]  /users/{email} - update user - code 400 scenario (age out of range)", async ({ usersManagement }) => {
+  const user = {
+    name: `${testDataHelper.getValidName()} ${testDataHelper.getValidLastName()}`,
+    email: testDataHelper.randomEmail(),
+    age: testDataHelper.randomAge()
+  }
+  const updatedUser = {
+    name: `${testDataHelper.getValidName()} ${testDataHelper.getValidLastName()}`,
+    email: testDataHelper.randomEmail(),
+    age: 0
+  }
+  await test.step("Step 001: update user information and validate response", async () => {
+    const addNewUserResponse = await usersManagement.createUser(user);
+    expect(addNewUserResponse.status()).toBe(201)
+    const updateUserResponse = await usersManagement.updateUsersEmail(user.email, updatedUser);
+    const updateUserData = await updateUserResponse.json();
+    expect(updateUserResponse.status()).toBe(400)
+    expect.soft(updateUserData.error).toBe("User not found")
+  });
+});
 test("[put]  /users/{email} - update user - code 404 scenario", async ({ usersManagement }) => {
   const user = {
     name: `${testDataHelper.getValidName()} ${testDataHelper.getValidLastName()}`,

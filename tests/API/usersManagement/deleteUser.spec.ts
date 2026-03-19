@@ -17,7 +17,7 @@ test("[DELETE] /users/{email} - DELETE user - code 204 scenario", async ({ users
     expect.soft(deletedUserData.error).toBe("User not found")
   });
 });
-test("[DELETE] /users/{email} - DELETE user - code 401 scenario", async ({ usersManagement }) => {
+test("[DELETE] /users/{email} - DELETE user - code 401 scenario (INVALID AUTHORIZATION TOKEN)", async ({ usersManagement }) => {
   const user = {
     name: `${testDataHelper.getValidName()} ${testDataHelper.getValidLastName()}`,
     email: testDataHelper.randomEmail(),
@@ -27,6 +27,23 @@ test("[DELETE] /users/{email} - DELETE user - code 401 scenario", async ({ users
     const response = await usersManagement.createUser(user);
     expect(response.status()).toBe(201)
     usersManagement.headers.Authorization = "fake authorization token"
+    const deleteUserResponse = await usersManagement.deleteUserByEmail(user.email)
+    const text = await deleteUserResponse.text()
+    const deletedUserData = text ? JSON.parse(text) : [];
+    expect.soft(deleteUserResponse.status()).toBe(401)
+    expect.soft(deletedUserData.error).toBe("User not found")
+  });
+});
+test("[DELETE] /users/{email} - DELETE user - code 401 scenario (EMPTY AUTHORIZATION TOKEN)", async ({ usersManagement }) => {
+  const user = {
+    name: `${testDataHelper.getValidName()} ${testDataHelper.getValidLastName()}`,
+    email: testDataHelper.randomEmail(),
+    age: testDataHelper.randomAge()
+  }
+  await test.step("Step 001: DELETE user and validate", async () => {
+    const response = await usersManagement.createUser(user);
+    expect(response.status()).toBe(201)
+    usersManagement.headers.Authorization = ""
     const deleteUserResponse = await usersManagement.deleteUserByEmail(user.email)
     const text = await deleteUserResponse.text()
     const deletedUserData = text ? JSON.parse(text) : [];

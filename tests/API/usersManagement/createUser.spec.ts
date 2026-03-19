@@ -39,6 +39,18 @@ test("[Post] /users - create a new user - code 400 scenario (invalid age)", asyn
     expect.soft((await response.json()).error).toBe("User not found")
   });
 });
+test("[Post] /users - create a new user - code 400 scenario (age out of range)", async ({ usersManagement }) => {
+   const user = {
+    name: `${testDataHelper.getValidName()} ${testDataHelper.getValidLastName()}`,
+    email: testDataHelper.randomEmail(),
+    age: 0
+  }
+  await test.step("Step 001: Create a new user", async () => {
+    const response = await usersManagement.createUser(user);
+    expect.soft(response.status()).toBe(400)
+    expect.soft((await response.json()).error).toBe("User not found")
+  });
+});
 test("[Post] /users - create a new user - code 400 scenario (empty email)", async ({ usersManagement }) => {
    const user = {
     name: `${testDataHelper.getValidName()} ${testDataHelper.getValidLastName()}`,
