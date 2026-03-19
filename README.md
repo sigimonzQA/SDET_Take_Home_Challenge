@@ -40,6 +40,6 @@
 ## [GET] /users/{email} - get a user by email
 
 | SCENARIO | EXPECTED RESULT | ACTUAL RESULT | ISSUE DESCRIPTION |
-| :--- | :--- | : :--- | :--- |
+| :--- | :--- | :--- | :--- |
 | **STATUS CODE 404 (NOT EXISTING EMAIL)** | The request must return: `{ "error": "User not found" }` and status code 404. | Returned `{ "error": "Internal server error" }` and status code 500. | The endpoint returned 500 instead of "User not found" (404). |
 | **STATUS CODE 404 (EMPTY EMAIL)** | The request must return: `{ "error": "User not found" }` and status code 404. | Returned `{ "error": "Internal server error" }` and status code 500. | The endpoint returned 500 instead of "User not found" (404). |
