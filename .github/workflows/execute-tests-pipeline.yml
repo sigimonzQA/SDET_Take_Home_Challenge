@@ -42,7 +42,7 @@ jobs:
           path: reports/
           retention-days: 1
   PROD:
-    needs: QA
+    needs: docker-setup
     timeout-minutes: 20
     runs-on: windows-latest
     steps:
